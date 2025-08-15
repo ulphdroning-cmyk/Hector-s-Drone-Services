@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hectors Drone Services</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+      color: #333;
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+
+    header {
+      background: white;
+      text-align: center;
+      padding: 2rem 1rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    header img {
+      max-width: 150px;
+      transition: transform 0.4s ease;
+    }
+
+    header img:hover {
+      transform: scale(1.05);
+    }
+
+    header h1 {
+      margin-top: 1rem;
+      font-size: 1.8rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    nav {
+      margin-top: 1rem;
+    }
+
+    nav a {
+      color: #333;
+      text-decoration: none;
+      margin: 0 1rem;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #007BFF;
+    }
+
+    section {
+      max-width: 1000px;
+      margin: auto;
+      padding: 3rem 1rem;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 1s ease forwards;
+    }
+
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    }
+
+    footer {
+      background: #333;
+      color: white;
+      text-align: center;
+      padding: 1.5rem;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="logo.png" alt="Hectors Drone Services Logo">
+    <h1>Hectors Drone Services</h1>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <section id="about">
+    <h2>About Me</h2>
+    <p>Hi! I'm Hector, a passionate drone pilot offering high-quality aerial photography and videography. With my DJI Mini 2 SE, I capture stunning perspectives for real estate, events, inspections, and more. I combine technical flying skills with creative storytelling to deliver exceptional results.</p>
+  </section>
+
+  <section id="services">
+    <h2>My Drone Services</h2>
+    <div class="services">
+      <div class="card">
+        <h3>Aerial Photography</h3>
+        <p>High-resolution images perfect for real estate, landscapes, and events.</p>
+      </div>
+      <div class="card">
+        <h3>Aerial Videography</h3>
+        <p>4K cinematic videos for promotional content and special occasions.</p>
+      </div>
+      <div class="card">
+        <h3>Inspections</h3>
+        <p>Safe and efficient aerial inspections for roofs, towers, and hard-to-reach places.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>Contact Me</h2>
+    <p>Email: <a href="mailto:ulphdroning@gmail.com">ulphdroning@gmail.com</a></p>
+    <p>Phone (Text Only): <a href="sms:+447774862763">+44 7774 862763</a></p>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Hectors Drone Services</p>
+  </footer>
+
+</body>
+</html>
