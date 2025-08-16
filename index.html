@@ -20,13 +20,11 @@
     #portfolio img { width:100%; transition:transform 0.3s; cursor:pointer; }
     #portfolio img:hover { transform:scale(1.05); }
     #testimonials blockquote { font-style:italic; margin:20px auto; max-width:600px; }
-    form { max-width:400px; margin:0 auto; display:flex; flex-direction:column; }
-    form input, form textarea, form select, form button { margin:8px 0; padding:10px; font-size:1em; }
+    form { max-width:400px; margin:0 auto; display:flex; flex-direction:column; text-align:left; }
+    form label { margin-top:10px; }
+    form input, form textarea, form select, form button { margin:5px 0; padding:10px; font-size:1em; width:100%; }
     form button { background:#000; color:#fff; border:none; cursor:pointer; }
     form button:hover { background:#444; }
-    .message { display:none; padding:10px; margin-top:10px; border-radius:5px; }
-    #form-success { background:#d4edda; color:#155724; }
-    #form-error { background:#f8d7da; color:#721c24; }
     footer { background:#000; color:#fff; padding:20px; text-align:center; }
     footer a { color:#fff; margin:0 10px; text-decoration:none; }
   </style>
@@ -85,28 +83,36 @@
 
 <section id="contact">
   <h2>Contact</h2>
-  <form id="quoteForm" action="https://formspree.io/f/mrbldnvo" method="POST">
-    <input type="text" name="name" placeholder="Your Name" required>
-    <input type="email" name="email" placeholder="Your Email" required>
-    
-    <!-- Service Dropdown -->
-    <select name="service" required>
-      <option value="" disabled selected>Select a service</option>
-      <option value="House Footage">House Footage</option>
-      <option value="Events">Events</option>
-      <option value="Festivals">Festivals</option>
-      <option value="Construction Progress">Construction Progress</option>
-      <option value="Tourism / Farming">Tourism / Farming</option>
-      <option value="Other">Other</option>
-    </select>
 
-    <textarea name="message" placeholder="Your Message"></textarea>
+  <!-- Official Formspree code with your ID -->
+  <form action="https://formspree.io/f/mrbldnvo" method="POST">
+    <label>
+      Your name:
+      <input type="text" name="name" required>
+    </label>
+    <label>
+      Your email:
+      <input type="email" name="email" required>
+    </label>
+    <label>
+      Service:
+      <select name="service" required>
+        <option value="" disabled selected>Select a service</option>
+        <option value="House Footage">House Footage</option>
+        <option value="Events">Events</option>
+        <option value="Festivals">Festivals</option>
+        <option value="Construction Progress">Construction Progress</option>
+        <option value="Tourism / Farming">Tourism / Farming</option>
+        <option value="Other">Other</option>
+      </select>
+    </label>
+    <label>
+      Your message:
+      <textarea name="message" required></textarea>
+    </label>
     <button type="submit">Send</button>
   </form>
 
-  <!-- Messages -->
-  <div id="form-success" class="message">✅ Thank you! Your message has been sent.</div>
-  <div id="form-error" class="message">❌ Oops! Something went wrong. Please try again.</div>
 </section>
 
 <footer>
@@ -117,41 +123,6 @@
     <a href="https://www.tiktok.com/@hectors_drone_services" target="_blank">TikTok</a>
   </p>
 </footer>
-
-<script>
-  const form = document.getElementById('quoteForm');
-  const successMsg = document.getElementById('form-success');
-  const errorMsg = document.getElementById('form-error');
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData(form);
-    try {
-      const res = await fetch(form.action, {
-        method: form.method,
-        body: formData,
-        headers: { 'Accept': 'application/json' }
-      });
-
-      if (res.ok) {
-        successMsg.style.display = 'block';
-        errorMsg.style.display = 'none';
-        form.reset();
-        setTimeout(() => { successMsg.style.display = 'none'; }, 5000);
-      } else {
-        const data = await res.json();
-        console.error("❌ Formspree Error:", data);
-        throw new Error("Formspree returned an error. Check console for details.");
-      }
-    } catch (err) {
-      console.error("❌ Submission failed:", err);
-      successMsg.style.display = 'none';
-      errorMsg.style.display = 'block';
-      setTimeout(() => { errorMsg.style.display = 'none'; }, 5000);
-    }
-  });
-</script>
 
 </body>
 </html>
