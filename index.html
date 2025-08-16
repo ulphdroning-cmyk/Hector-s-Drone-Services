@@ -158,7 +158,7 @@
       display:inline-flex; align-items:center; justify-content:center; gap:10px;
       padding:14px 22px; border-radius:14px; font-weight:700; letter-spacing:.2px;
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      color:#FFFFFF; border: 1px solid transparent;
+      color:#0c1111; border: 1px solid transparent;
       box-shadow: 0 10px 30px rgba(0,0,0,.35);
       transition: transform .2s, box-shadow .2s, filter .2s;
     }
@@ -337,7 +337,7 @@
       <div class="nav-links" id="navLinks">
         <a href="#services">Services</a>
         <a href="#portfolio">Portfolio</a>
-        <a href="#testimonials">Reviews</a>
+        <a href="#testimonials">Client Testimonials</a>
         <a href="#about">Our Story</a>
         <a href="#contact">Contact</a>
       </div>
@@ -406,14 +406,14 @@
         </figure>
         <figure class="tile col-4 reveal" data-index="1">
           <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=1200&auto=format&fit=crop" alt="Modern home from above">
-          <div class="overlay"><h4>Estate</h4></div>
+          <div class="overlay"><h4>Real Estate</h4></div>
         </figure>
         <figure class="tile col-6 reveal" data-index="2">
           <img src="https://images.unsplash.com/photo-1508615070457-7baeba4003a1?q=80&w=1200&auto=format&fit=crop" alt="Construction site aerial">
           <div class="overlay"><h4>Progress Tracking</h4></div>
         </figure>
         <figure class="tile col-6 reveal" data-index="3">
-          <img src="https://github.com/ulphdroning-cmyk/Hector-s-Drone-Services/blob/main/portfolio/portfolio1.jpg?raw=true" alt="River cutting through forest">
+          <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=1200&auto=format&fit=crop" alt="River cutting through forest">
           <div class="overlay"><h4>Nature & Terrain</h4></div>
         </figure>
         <figure class="tile col-4 reveal" data-index="4">
@@ -507,7 +507,7 @@
       <div class="contact-cta reveal">
         <!-- “sms:” attempts to open the default messaging app on mobile -->
         <a href="sms:+447774862763" aria-label="Message Hector's Droning Services">📱 Message: +44 7774862763</a>
-        <a href="mailto:ulphdroning@gmail.com" aria-label="Email Hector's Droning Services">✉️ Email: ulphdroning@gmail.com</a>
+        <a href="mailto:hectorsdroning@gmail.com" aria-label="Email Hector's Droning Services">✉️ Email: hectorsdroning@gmail.com</a>
       </div>
       <p class="contact-note reveal">Prefer a call? Save the number and dial when convenient.</p>
     </div>
@@ -569,8 +569,8 @@
       "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=2400&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=2400&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1508615070457-7baeba4003a1?q=80&w=2400&auto=format&fit=crop",
-      "https://github.com/ulphdroning-cmyk/Hector-s-Drone-Services/blob/main/portfolio/portfolio1.jpg?raw=true",
-      "https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=2400&auto=format&fit=crop", 
+      "https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=2400&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=2400&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1542039375-28138150cc31?q=80&w=2400&auto=format&fit=crop"
     ];
     let currentIndex = 0;
@@ -633,12 +633,14 @@
       updateCarousel();
       resetAuto();
     }
-    
+    function nextSlide(){ slideIndex = (slideIndex + 1) % slides.length; updateCarousel(); }
+    function prevSlide(){ slideIndex = (slideIndex - 1 + slides.length) % slides.length; updateCarousel(); }
 
     nextSlideBtn.addEventListener('click', () => { nextSlide(); resetAuto(); });
     prevSlideBtn.addEventListener('click', () => { prevSlide(); resetAuto(); });
 
-    
+    let auto = setInterval(nextSlide, 6000);
+    function resetAuto(){ clearInterval(auto); auto = setInterval(nextSlide, 6000); }
   </script>
 </body>
 </html>
