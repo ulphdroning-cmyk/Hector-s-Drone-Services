@@ -13,7 +13,7 @@
       color: #fff;
       line-height: 1.6;
     }
-    a { color: cyan; text-decoration: none; }
+    a { color: #fff; text-decoration: none; }
     h1, h2, h3 { margin: 0 0 20px; }
 
     /* Navigation */
@@ -90,7 +90,7 @@
       text-align: center;
       font-size: 2.2em;
       margin-bottom: 40px;
-      color: cyan;
+      color: #fff; /* White titles */
     }
 
     /* About */
@@ -104,7 +104,7 @@
     .about img {
       width: 300px;
       border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0,255,255,0.3);
+      box-shadow: 0 0 15px rgba(255,255,255,0.1);
     }
     .about div { max-width: 500px; }
 
@@ -122,7 +122,7 @@
       text-align: center;
     }
     .service:hover { transform: translateY(-8px); }
-    .service h3 { color: cyan; margin-bottom: 15px; }
+    .service h3 { color: #fff; margin-bottom: 15px; }
 
     /* Portfolio */
     .portfolio {
@@ -137,7 +137,6 @@
     }
     .portfolio img:hover {
       transform: scale(1.05);
-      box-shadow: 0 0 20px rgba(0,255,255,0.2);
     }
 
     /* Testimonials */
@@ -155,7 +154,7 @@
     }
     .testimonial h4 {
       margin-top: 15px;
-      color: cyan;
+      color: #fff;
       font-style: normal;
     }
 
@@ -181,6 +180,7 @@
       border-radius: 5px;
       cursor: pointer;
       transition: 0.3s;
+      color: #000;
     }
     button:hover { background: #00a9a9; color: #fff; }
 
@@ -191,7 +191,7 @@
       background: #111;
       margin-top: 50px;
     }
-    footer a { margin: 0 10px; }
+    footer a { margin: 0 10px; color: #fff; }
   </style>
 </head>
 <body>
@@ -309,7 +309,6 @@
 
   <!-- Mailto Script -->
   <script>
-    // Simple mailto fallback for the form (no backend required)
     const form = document.getElementById('quoteForm');
     form.addEventListener('submit', function(ev){
       ev.preventDefault();
