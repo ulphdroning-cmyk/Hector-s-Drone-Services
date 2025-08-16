@@ -348,19 +348,41 @@
     };
     onScrollReveal();
 
-    // Simple mailto fallback for the form (no backend required)
-    const form = document.getElementById('quoteForm');
-    form.addEventListener('submit', function(ev){
-      ev.preventDefault();
-      const data = new FormData(form);
-      const name = encodeURIComponent(data.get('name'));
-      const email = encodeURIComponent(data.get('email'));
-      const service = encodeURIComponent(data.get('service'));
-      const message = encodeURIComponent(data.get('message'));
-      const subject = `Quote request: ${decodeURIComponent(service) || 'Drone project'}`;
-      const body = `Name: ${decodeURIComponent(name)}%0D%0AEmail: ${decodeURIComponent(email)}%0D%0AService: ${decodeURIComponent(service)}%0D%0A%0D%0ADetails:%0D%0A${decodeURIComponent(message)}`;
-      window.location.href = `mailto:ulphdroning@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+   const form = document.getElementById('quoteForm');
+const successMsg = document.getElementById('form-success');
+const errorMsg = document.getElementById('form-error');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const formData = new FormData(form);
+  try {
+    const res = await fetch(form.action, {
+      method: form.method,
+      body: formData,
+      headers: { 'Accept': 'application/json' }
     });
+
+    if (res.ok) {
+      successMsg.style.display = 'block';
+      errorMsg.style.display = 'none';
+      form.reset();
+
+      // auto hide success after 5s
+      setTimeout(() => { successMsg.style.display = 'none'; }, 5000);
+
+    } else {
+      throw new Error("Formspree error");
+    }
+  } catch (err) {
+    successMsg.style.display = 'none';
+    errorMsg.style.display = 'block';
+
+    // auto hide error after 5s
+    setTimeout(() => { errorMsg.style.display = 'none'; }, 5000);
+  }
+});
+
   </script>
 </body>
 </html>
