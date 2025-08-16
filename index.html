@@ -99,17 +99,6 @@
       box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     }
 
-    /* Testimonials */
-    #testimonials .testimonial {
-      max-width: 600px;
-      margin: 20px auto;
-      background: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      font-style: italic;
-    }
-
     /* Contact */
     form {
       max-width: 500px;
@@ -166,7 +155,6 @@
       <li><a href="#about">About</a></li>
       <li><a href="#services">Services</a></li>
       <li><a href="#portfolio">Portfolio</a></li>
-      <li><a href="#testimonials">Testimonials</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
@@ -205,13 +193,6 @@
       <img src="portfolio3.jpg" alt="Drone shot 3">
       <img src="portfolio4.jpg" alt="Drone shot 4">
     </div>
-  </section>
-
-  <!-- Testimonials -->
-  <section id="testimonials">
-    <h2>Testimonials</h2>
-    <div class="testimonial">“Absolutely amazing shots of our wedding — couldn’t be happier!”</div>
-    <div class="testimonial">“Hector captured the progress of our construction project perfectly.”</div>
   </section>
 
   <!-- Contact -->
@@ -278,10 +259,6 @@
         formMessage.className = "error";
         formMessage.style.display = "block";
       }
-
-      setTimeout(() => {
-        formMessage.style.display = "none";
-      }, 5000);
     });
   </script>
 </body>
