@@ -1,402 +1,405 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Hector’s Drone Services</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hector's Droning Services</title>
   <style>
-    /* Global Styles */
-    body {
+    /* -------------------------------
+       GLOBAL STYLES
+    ---------------------------------*/
+    * {
       margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f9f9f9;
-      color: #222;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      background: #f5f5f5;
+      color: #333;
       line-height: 1.6;
       scroll-behavior: smooth;
     }
-    a { color: inherit; text-decoration: none; }
-    h1, h2, h3 { margin: 0 0 20px; }
 
-    /* Navigation */
-    nav {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      background: rgba(255, 255, 255, 0.95);
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    section {
+      padding: 60px 20px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 2.2rem;
+    }
+
+    /* -------------------------------
+       HEADER & NAV
+    ---------------------------------*/
+    header {
+      background: #111;
+      color: #fff;
+      padding: 15px 40px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px 40px;
+      position: sticky;
+      top: 0;
       z-index: 1000;
     }
-    nav img {
+
+    header img {
       height: 50px;
-      border-radius: 10px;
+      border-radius: 8px; /* rounded logo */
     }
-    .nav-links {
-      display: flex;
-      gap: 25px;
-    }
+
     nav a {
-      font-weight: 600;
-      position: relative;
-      color: #333;
-      transition: color 0.3s;
-    }
-    nav a::after {
-      content: '';
-      position: absolute;
-      width: 0%;
-      height: 2px;
-      bottom: -5px;
-      left: 0;
-      background: cyan;
-      transition: 0.3s;
-    }
-    nav a:hover::after { width: 100%; }
-    nav a:hover { color: #00a9a9; }
-
-    /* Hero */
-    .hero {
-      height: 100vh;
-      background: url('hero-drone.jpg') center/cover no-repeat;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      text-align: center;
-      color: #fff;
-      padding: 20px;
-      position: relative;
-    }
-    .hero::after {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.35);
-    }
-    .hero * { position: relative; z-index: 2; }
-    .hero h1 {
-      font-size: 3.5em;
-      text-shadow: 0 0 15px rgba(0,0,0,0.6);
-      animation: fadeInDown 1s ease-out;
-    }
-    .hero p {
-      font-size: 1.3em;
-      margin: 20px 0;
-      animation: fadeInUp 1.2s ease-out;
-    }
-    .btn {
-      background: cyan;
-      color: #000;
-      padding: 12px 25px;
-      border-radius: 5px;
+      margin-left: 20px;
       font-weight: bold;
-      transition: 0.3s;
-    }
-    .btn:hover {
-      background: #00a9a9;
       color: #fff;
-      transform: scale(1.05);
-    }
-
-    /* Keyframes */
-    @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(-30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Sections */
-    section {
-      padding: 90px 20px;
-      max-width: 1200px;
-      margin: auto;
       position: relative;
-      z-index: 1;
-    }
-    section h2 {
-      text-align: center;
-      font-size: 2.4em;
-      margin-bottom: 40px;
-      color: #111;
+      transition: color 0.3s ease;
     }
 
-    /* About */
-    .about {
+    nav a::after {
+      content: "";
+      display: block;
+      width: 0;
+      height: 2px;
+      background: #0077ff;
+      transition: width 0.3s;
+      margin-top: 4px;
+    }
+
+    nav a:hover {
+      color: #0077ff;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    /* -------------------------------
+       HERO
+    ---------------------------------*/
+    #home {
+      background: url('drone-bg.jpg') no-repeat center center/cover;
+      color: #fff;
+      height: 100vh;
       display: flex;
-      flex-wrap: wrap;
-      align-items: center;
+      flex-direction: column;
       justify-content: center;
-      gap: 30px;
+      align-items: center;
+      text-align: center;
+      padding: 0 20px;
     }
-    .about img {
-      width: 300px;
-      border-radius: 10px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-      transition: transform 0.3s;
-    }
-    .about img:hover { transform: scale(1.05); }
-    .about div { max-width: 500px; }
 
-    /* Services */
-    .services {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
+    #home h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 10px rgba(0,0,0,0.6);
     }
+
+    #home p {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      background: #0077ff;
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background: #005fcc;
+    }
+
+    /* -------------------------------
+       SERVICES
+    ---------------------------------*/
+    .services-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
+
     .service {
       background: #fff;
       padding: 20px;
       border-radius: 8px;
-      transition: transform 0.3s, box-shadow 0.3s;
       text-align: center;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
     }
+
     .service:hover {
       transform: translateY(-8px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     }
-    .service h3 { color: #00a9a9; margin-bottom: 15px; }
 
-    /* Portfolio */
-    .portfolio {
+    /* -------------------------------
+       PORTFOLIO
+    ---------------------------------*/
+    .portfolio-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 15px;
+      max-width: 1100px;
+      margin: auto;
     }
+
     .portfolio-item {
       position: relative;
       overflow: hidden;
-      border-radius: 10px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+      border-radius: 8px;
     }
-    .portfolio img {
-      width: 100%;
-      display: block;
-      transition: transform 0.5s;
+
+    .portfolio-item img {
+      transition: transform 0.4s ease;
     }
+
     .portfolio-item:hover img {
       transform: scale(1.1);
     }
-    .portfolio-caption {
+
+    .portfolio-overlay {
       position: absolute;
-      bottom: 0;
-      left: 0; right: 0;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       background: rgba(0,0,0,0.6);
       color: #fff;
-      text-align: center;
-      padding: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       opacity: 0;
       transition: opacity 0.4s;
-      font-weight: 600;
+      font-size: 1.2rem;
+      font-weight: bold;
     }
-    .portfolio-item:hover .portfolio-caption {
+
+    .portfolio-item:hover .portfolio-overlay {
       opacity: 1;
     }
 
-    /* Testimonials */
-    .testimonials {
+    /* -------------------------------
+       REVIEWS
+    ---------------------------------*/
+    .reviews-container {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 20px;
+      max-width: 1000px;
+      margin: auto;
     }
-    .testimonial {
+
+    .review {
       background: #fff;
       padding: 20px;
       border-radius: 8px;
-      font-style: italic;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
-      transition: transform 0.3s;
-    }
-    .testimonial:hover { transform: scale(1.03); }
-    .testimonial h4 {
-      margin-top: 15px;
-      color: #00a9a9;
-      font-style: normal;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
 
-    /* Contact */
-    form {
+    .review p {
+      margin-bottom: 10px;
+    }
+
+    .review strong {
+      color: #0077ff;
+    }
+
+    /* -------------------------------
+       ABOUT
+    ---------------------------------*/
+    #about {
+      background: #fff;
+      text-align: center;
+    }
+
+    #about p {
+      max-width: 800px;
+      margin: auto;
+      font-size: 1.1rem;
+    }
+
+    /* -------------------------------
+       CONTACT
+    ---------------------------------*/
+    .contact-container {
+      max-width: 600px;
+      margin: auto;
+      text-align: center;
+    }
+
+    .contact-container form {
       display: flex;
       flex-direction: column;
-      gap: 15px;
-      max-width: 500px;
-      margin: auto;
     }
-    input, textarea, select {
-      padding: 12px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      font-size: 1em;
-    }
-    button {
-      background: cyan;
-      border: none;
-      padding: 12px;
-      font-weight: bold;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: 0.3s;
-      color: #000;
-    }
-    button:hover { background: #00a9a9; color: #fff; }
 
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 30px 15px;
-      background: #f1f1f1;
-      margin-top: 50px;
-      color: #555;
+    .contact-container input,
+    .contact-container textarea {
+      margin-bottom: 15px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 1rem;
     }
-    footer a { margin: 0 10px; color: #00a9a9; }
+
+    .contact-container button {
+      background: #0077ff;
+      color: #fff;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .contact-container button:hover {
+      background: #005fcc;
+    }
+
+    /* -------------------------------
+       FOOTER
+    ---------------------------------*/
+    footer {
+      background: #111;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+    }
+
+    /* -------------------------------
+       RESPONSIVE
+    ---------------------------------*/
+    @media (max-width: 768px) {
+      #home h1 {
+        font-size: 2.2rem;
+      }
+      nav a {
+        margin-left: 12px;
+      }
+    }
   </style>
 </head>
 <body>
-  <!-- Navigation -->
-  <nav>
-    <img src="logo.png" alt="Logo">
-    <div class="nav-links">
-      <a href="#hero">Home</a>
-      <a href="#about">About</a>
+
+  <!-- HEADER -->
+  <header>
+    <img src="logo.png" alt="Hector's Droning Services Logo">
+    <nav>
+      <a href="#home">Home</a>
       <a href="#services">Services</a>
       <a href="#portfolio">Portfolio</a>
-      <a href="#testimonials">Testimonials</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#about">About</a>
       <a href="#contact">Contact</a>
-    </div>
-  </nav>
+    </nav>
+  </header>
 
-  <!-- Hero -->
-  <section class="hero" id="hero">
-    <h1>Hector’s Drone Services</h1>
-    <p>Capturing life from above</p>
+  <!-- HERO -->
+  <section id="home">
+    <h1>Elevate Your Perspective</h1>
+    <p>Professional drone services capturing stunning aerial footage and photography to bring your vision to life.</p>
     <a href="#contact" class="btn">Request a Quote</a>
   </section>
 
-  <!-- About -->
-  <section id="about">
-    <h2>About Me</h2>
-    <div class="about">
-      <img src="your-photo.jpg" alt="Hector with Drone">
-      <div>
-        <p>Hi, I’m Hector! I started droning to capture the beauty of places from unique perspectives. With my licenses and experience, I provide professional drone services tailored to your needs. Flying drones is not just work for me—it’s my passion.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Services -->
+  <!-- SERVICES -->
   <section id="services">
-    <h2>Services</h2>
-    <div class="services">
-      <div class="service">
-        <h3>House Footage</h3>
-        <p>Showcase real estate with smooth aerial views.</p>
-      </div>
-      <div class="service">
-        <h3>Events</h3>
-        <p>Capture weddings, parties, and gatherings from above.</p>
-      </div>
-      <div class="service">
-        <h3>Festivals</h3>
-        <p>Highlight the energy and crowds with cinematic drone shots.</p>
-      </div>
-      <div class="service">
-        <h3>Construction Progress</h3>
-        <p>Document progress for builders and clients with precision.</p>
-      </div>
+    <h2>Our Services</h2>
+    <div class="services-container">
+      <div class="service"><h3>Real Estate</h3><p>High-quality aerial shots of properties for listings.</p></div>
+      <div class="service"><h3>Events</h3><p>Capture weddings, festivals, and gatherings from above.</p></div>
+      <div class="service"><h3>Construction</h3><p>Monitor progress with accurate aerial documentation.</p></div>
+      <div class="service"><h3>Tourism</h3><p>Stunning visuals to promote destinations.</p></div>
     </div>
   </section>
 
-  <!-- Portfolio -->
+  <!-- PORTFOLIO -->
   <section id="portfolio">
     <h2>Portfolio</h2>
-    <div class="portfolio">
+    <div class="portfolio-container">
       <div class="portfolio-item">
-        <img src="portfolio1.jpg" alt="Nature drone shot">
-        <div class="portfolio-caption">Nature</div>
+        <img src="portfolio1.jpg" alt="Nature">
+        <div class="portfolio-overlay">Nature</div>
       </div>
       <div class="portfolio-item">
-        <img src="portfolio2.jpg" alt="Event drone shot">
-        <div class="portfolio-caption">Events</div>
+        <img src="portfolio2.jpg" alt="Real Estate">
+        <div class="portfolio-overlay">Real Estate</div>
       </div>
       <div class="portfolio-item">
-        <img src="portfolio3.jpg" alt="Real estate drone shot">
-        <div class="portfolio-caption">Real Estate</div>
+        <img src="portfolio3.jpg" alt="Events">
+        <div class="portfolio-overlay">Events</div>
       </div>
       <div class="portfolio-item">
-        <img src="portfolio4.jpg" alt="Festival drone shot">
-        <div class="portfolio-caption">Festivals</div>
+        <img src="portfolio4.jpg" alt="Construction">
+        <div class="portfolio-overlay">Construction</div>
       </div>
     </div>
   </section>
 
-  <!-- Testimonials -->
-  <section id="testimonials">
-    <h2>Testimonials</h2>
-    <div class="testimonials">
-      <div class="testimonial">
-        <p>"Amazing shots for our wedding, captured every moment beautifully!"</p>
-        <h4>- Sarah & Tom</h4>
-      </div>
-      <div class="testimonial">
-        <p>"The aerial view of my property was just what I needed to sell it quickly."</p>
-        <h4>- James R.</h4>
-      </div>
-      <div class="testimonial">
-        <p>"Professional, creative, and friendly. Highly recommend Hector’s services."</p>
-        <h4>- Emily W.</h4>
-      </div>
+  <!-- REVIEWS -->
+  <section id="reviews">
+    <h2>What Clients Say</h2>
+    <div class="reviews-container">
+      <div class="review"><p>"Amazing drone shots that brought our wedding to life!"</p><strong>- Sarah L.</strong></div>
+      <div class="review"><p>"Reliable and creative. The real estate videos boosted my sales instantly."</p><strong>- James K.</strong></div>
+      <div class="review"><p>"Professional service and stunning results every time."</p><strong>- Olivia R.</strong></div>
     </div>
   </section>
 
-  <!-- Contact -->
+  <!-- ABOUT -->
+  <section id="about">
+    <h2>About Us</h2>
+    <p>At Hector's Droning Services, we are passionate about capturing life from above. With experience in real estate, events, construction, and more, our mission is to provide breathtaking aerial visuals that tell your story from a new perspective.</p>
+  </section>
+
+  <!-- CONTACT -->
   <section id="contact">
-    <h2>Contact</h2>
-    <form id="quoteForm">
-      <input type="text" name="name" placeholder="Your Name" required>
-      <input type="email" name="email" placeholder="Your Email" required>
-      <select name="service">
-        <option value="">Select Service</option>
-        <option>House Footage</option>
-        <option>Events</option>
-        <option>Festivals</option>
-        <option>Construction Progress</option>
-      </select>
-      <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
-      <button type="submit">Send Request</button>
-    </form>
-    <p style="text-align:center; margin-top:20px;">
-      📧 ulphdroning@gmail.com | 📱 +44 7774862763
-    </p>
-    <p style="text-align:center;">
-      <a href="https://www.instagram.com/Hectors_Drone_Services" target="_blank">Instagram</a> | 
-      <a href="https://www.youtube.com/@HectorsDroneServices" target="_blank">YouTube</a> | 
-      <a href="https://www.tiktok.com/@hectors_drone_services" target="_blank">TikTok</a>
-    </p>
+    <h2>Contact Us</h2>
+    <div class="contact-container">
+      <p><strong>Phone:</strong> +44 7774862763</p>
+      <p><strong>Email:</strong> ulphdroning@gmail.com</p>
+      <form id="quoteForm">
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="email" name="email" placeholder="Your Email" required>
+        <textarea name="message" rows="5" placeholder="Your Message"></textarea>
+        <button type="submit">Send</button>
+      </form>
+    </div>
   </section>
 
-  <!-- Footer -->
+  <!-- FOOTER -->
   <footer>
-    <p>© 2025 Hector’s Drone Services. All rights reserved.</p>
+    <p>© 2025 Hector's Droning Services | All Rights Reserved</p>
   </footer>
 
-  <!-- Mailto Script -->
+  <!-- MAILTO SCRIPT -->
   <script>
+    // Simple mailto fallback for the form (no backend required)
     const form = document.getElementById('quoteForm');
     form.addEventListener('submit', function(ev){
       ev.preventDefault();
       const data = new FormData(form);
       const name = encodeURIComponent(data.get('name'));
       const email = encodeURIComponent(data.get('email'));
-      const service = encodeURIComponent(data.get('service'));
       const message = encodeURIComponent(data.get('message'));
-      const subject = `Quote request: ${decodeURIComponent(service) || 'Drone project'}`;
-      const body = `Name: ${decodeURIComponent(name)}%0D%0AEmail: ${decodeURIComponent(email)}%0D%0AService: ${decodeURIComponent(service)}%0D%0A%0D%0ADetails:%0D%0A${decodeURIComponent(message)}`;
+      const subject = `Quote request from ${decodeURIComponent(name)}`;
+      const body = `Name: ${decodeURIComponent(name)}%0D%0AEmail: ${decodeURIComponent(email)}%0D%0A%0D%0AMessage:%0D%0A${decodeURIComponent(message)}`;
       window.location.href = `mailto:ulphdroning@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
     });
   </script>
