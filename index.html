@@ -1,406 +1,646 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Hector's Droning Services</title>
+
+  <!-- Google Fonts: Headings = Poppins (sans); Body = Playfair Display (serif) -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Playfair+Display:ital,wght@0,400;0,600;1,500&display=swap" rel="stylesheet">
+
   <style>
-    /* -------------------------------
-       GLOBAL STYLES
-    ---------------------------------*/
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      color: #333;
-      background-color: #f9f9f9;
-      scroll-behavior: smooth;
-    }
-    h1, h2, h3 {
-      margin: 0;
-    }
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    /* -------------------------------
-       HEADER & NAVIGATION
-    ---------------------------------*/
-    header {
-      background: #111;
-      color: white;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 1000;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 20px;
-    }
-    header img {
-      height: 50px;
-      border-radius: 8px;
-    }
-    nav {
-      display: flex;
-      gap: 20px;
-    }
-    nav a {
-      color: white;
-      font-weight: bold;
-      position: relative;
-    }
-    nav a::after {
-      content: "";
-      position: absolute;
-      width: 0;
-      height: 2px;
-      bottom: -4px;
-      left: 0;
-      background: #00bcd4;
-      transition: width 0.3s;
-    }
-    nav a:hover::after {
-      width: 100%;
+    /* =========================================================
+       THEME (colors, typography, spacing)
+       ========================================================= */
+    :root{
+      --bg:#121212;              /* deep charcoal background */
+      --panel:#181818;           /* slightly lighter panels */
+      --text:#F0F0F0;            /* soft near-white text */
+      --muted:#B8B8B8;           /* secondary text */
+      --accent:#1BA5A5;          /* deep teal accent */
+      --accent-2:#19C4C4;        /* lighter teal for hovers */
+      --gold:#B8860B;            /* optional muted gold */
+      --ring: rgba(27,165,165,.35);
+      --maxw:1200px;
+      --radius:18px;
+      --shadow:0 20px 60px rgba(0,0,0,.45);
+      --spacing: clamp(14px, 1.6vw, 22px);
     }
 
-    /* Hamburger menu */
-    .menu-toggle {
-      display: none;
-      flex-direction: column;
-      cursor: pointer;
-      gap: 5px;
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      color:var(--text);
+      background:
+        radial-gradient(900px 500px at 85% -15%, rgba(25,196,196,.08), transparent 60%),
+        radial-gradient(700px 400px at 10% -10%, rgba(184,134,11,.06), transparent 60%),
+        var(--bg);
+      font-family: "Playfair Display", serif; /* body text */
+      line-height: 1.6;
     }
-    .menu-toggle div {
-      width: 25px;
-      height: 3px;
-      background: white;
-      transition: all 0.3s;
+    h1,h2,h3,h4,.nav-brand{
+      font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; /* headings */
+      line-height:1.2;
+      margin:0 0 10px 0;
     }
+    p{margin:0 0 12px 0}
+    a{color:inherit; text-decoration:none}
 
-    /* Mobile menu */
-    @media (max-width: 768px) {
-      nav {
-        position: fixed;
-        top: 0;
-        right: -250px;
-        background: #222;
-        height: 100vh;
-        width: 250px;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 30px;
-        transition: right 0.3s ease-in-out;
+    /* =========================================================
+       NAVIGATION (fixed, semi-transparent, premium)
+       ========================================================= */
+    .nav{
+      position:fixed; inset:0 0 auto 0; height:66px; z-index:1000;
+      backdrop-filter:saturate(1.2) blur(8px);
+      background:linear-gradient(to bottom, rgba(18,18,18,.85), rgba(18,18,18,.55));
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    .nav-inner{
+      max-width:var(--maxw);
+      margin:auto;
+      height:100%;
+      display:flex;
+      align-items:center;
+      gap:22px;
+      padding:0 18px;
+    }
+    .nav-brand{
+      font-weight:800;
+      letter-spacing:.3px;
+      color:var(--text);
+      white-space:nowrap;
+    }
+    .nav-links{
+      margin-left:auto;
+      display:flex;
+      gap: clamp(14px, 2.4vw, 32px);
+    }
+    .nav-links a{
+      color:var(--text);
+      opacity:.9;
+      font-weight:600;
+      position:relative;
+    }
+    .nav-links a::after{
+      content:"";
+      position:absolute; left:0; bottom:-8px; height:2px; width:0;
+      background:linear-gradient(90deg, var(--accent), var(--accent-2));
+      transition:width .28s ease;
+    }
+    .nav-links a:hover{opacity:1}
+    .nav-links a:hover::after{width:100%}
+
+    /* Mobile menu (hamburger) */
+    .menu-toggle{display:none; margin-left:auto; cursor:pointer; padding:8px}
+    .menu-toggle span{
+      display:block; width:26px; height:2px; background:#fff; margin:6px 0; transition:.3s;
+    }
+    @media (max-width: 880px){
+      .nav-links{
+        position:fixed; right:16px; top:76px; width:min(320px, 85vw);
+        background:rgba(24,24,24,.98);
+        border:1px solid rgba(255,255,255,.06);
+        border-radius:14px;
+        padding:16px;
+        box-shadow:var(--shadow);
+        display:grid; gap:14px;
+        transform:translateY(-14px) scale(.98);
+        opacity:0; pointer-events:none;
+        transition:.28s ease;
       }
-      nav.active {
-        right: 0;
+      .nav-links.show{
+        opacity:1; pointer-events:auto; transform:none;
       }
-      .menu-toggle {
-        display: flex;
-      }
+      .menu-toggle{display:block}
     }
 
-    /* -------------------------------
-       HERO SECTION
-    ---------------------------------*/
-    .hero {
-      height: 100vh;
-      background: url('drone-bg.jpg') center/cover no-repeat;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      color: white;
-      padding: 20px;
+    /* =========================================================
+       SECTIONS (layout wrappers)
+       ========================================================= */
+    section{padding: clamp(80px, 10vh, 140px) 20px}
+    .container{max-width:var(--maxw); margin:auto}
+
+    /* Reveal-on-scroll animation */
+    .reveal{opacity:0; transform: translateY(16px); transition: opacity .7s ease, transform .7s ease}
+    .reveal.visible{opacity:1; transform: none}
+
+    /* =========================================================
+       HERO (cinematic still with subtle “Ken Burns” motion)
+       ========================================================= */
+    .hero{
+      min-height:100vh;
+      display:grid; place-items:center;
+      position:relative; overflow:hidden;
     }
-    .hero h1 {
-      font-size: 3rem;
-      margin-bottom: 10px;
+    .hero::before{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        linear-gradient(to top, rgba(0,0,0,.55), rgba(0,0,0,.2)),
+        url("https://images.unsplash.com/photo-1473186505569-9c61870c11f9?q=80&w=2100&auto=format&fit=crop") center/cover no-repeat;
+      transform: scale(1.08);
+      animation: kenburns 22s ease-in-out infinite alternate;
+      filter: saturate(1.05) contrast(1.02) brightness(.85);
     }
-    .hero p {
-      font-size: 1.2rem;
-      margin-bottom: 20px;
+    @keyframes kenburns{
+      from{transform: scale(1.08)}
+      to{transform: scale(1.16)}
     }
-    .hero .btn {
-      background: #00bcd4;
-      color: white;
-      padding: 12px 25px;
-      border-radius: 6px;
-      transition: 0.3s;
-      font-size: 1rem;
+    .hero-content{
+      position:relative; z-index:1; text-align:center; padding: 0 10px;
+      max-width:900px; display:grid; gap:16px;
     }
-    .hero .btn:hover {
-      background: #0097a7;
+    .eyebrow{letter-spacing:.28em; font-size:12px; color:var(--muted); text-transform:uppercase}
+    .hero h1{font-size: clamp(36px, 6vw, 72px)}
+    .hero p.lead{font-size: clamp(16px, 2vw, 20px); color:#E6E6E6}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding:14px 22px; border-radius:14px; font-weight:700; letter-spacing:.2px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color:#0c1111; border: 1px solid transparent;
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+      transition: transform .2s, box-shadow .2s, filter .2s;
+    }
+    .btn:hover{transform:translateY(-2px); filter:brightness(1.02); box-shadow:0 16px 40px rgba(0,0,0,.45)}
+
+    /* =========================================================
+       SERVICES (4-card grid)
+       ========================================================= */
+    .section-title{margin-bottom: 6px; font-size: clamp(28px, 4vw, 42px)}
+    .section-sub{color:var(--muted); margin-bottom: 26px}
+    .services{
+      display:grid; gap:18px;
+      grid-template-columns: repeat(4, 1fr);
+    }
+    @media (max-width: 980px){ .services{grid-template-columns: 1fr 1fr} }
+    @media (max-width: 560px){ .services{grid-template-columns: 1fr} }
+
+    .service{
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.06);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+      transition: transform .25s, border-color .25s, box-shadow .25s;
+      display:grid; gap: 8px;
+    }
+    .service:hover{transform: translateY(-6px); border-color: var(--ring); box-shadow: 0 22px 60px rgba(0,0,0,.5)}
+    .service .icon{
+      width:46px; height:46px; display:grid; place-items:center;
+      border-radius:12px;
+      background: radial-gradient(120px 120px at 20% 10%, rgba(25,196,196,.25), transparent 55%), #111;
+      border:1px solid rgba(255,255,255,.08);
+      color: var(--accent-2);
+      font-size: 22px; font-weight: 800;
+    }
+    .service h3{margin-top:6px}
+
+    /* =========================================================
+       PORTFOLIO (grid + lightbox)
+       ========================================================= */
+    .portfolio-grid{
+      display:grid; gap:10px;
+      grid-template-columns: repeat(12, 1fr);
+    }
+    .tile{
+      position:relative; border-radius:16px; overflow:hidden;
+      border:1px solid rgba(255,255,255,.06); background:#0f1318;
+      aspect-ratio: 4/3;
+      cursor:pointer;
+    }
+    .tile img{width:100%; height:100%; object-fit:cover; transition: transform .6s ease}
+    .tile:hover img{transform: scale(1.06)}
+    .tile .overlay{
+      position:absolute; inset:0; display:flex; align-items:flex-end; padding:12px;
+      background: linear-gradient(to top, rgba(0,0,0,.55), rgba(0,0,0,0));
+      opacity:0; transition:.35s;
+    }
+    .tile:hover .overlay{opacity:1}
+    .tile h4{margin:0; font-size:16px}
+
+    /* column spans for visual rhythm */
+    .col-4{grid-column:span 4} .col-6{grid-column:span 6} .col-8{grid-column:span 8}
+    @media (max-width: 760px){
+      .portfolio-grid{grid-template-columns: repeat(6,1fr)}
+      .col-8,.col-6,.col-4{grid-column:span 6}
     }
 
-    /* -------------------------------
-       SERVICES
-    ---------------------------------*/
-    .services {
-      padding: 80px 20px;
-      text-align: center;
+    /* Lightbox overlay */
+    .lightbox{
+      position:fixed; inset:0; z-index:2000; display:none;
+      background: rgba(0,0,0,.92);
+      align-items:center; justify-content:center;
+      padding: 30px;
     }
-    .services h2 {
-      margin-bottom: 40px;
-      font-size: 2rem;
+    .lightbox.show{display:flex}
+    .lightbox img{
+      max-width: 92vw; max-height: 82vh; border-radius: 12px;
+      box-shadow: 0 30px 100px rgba(0,0,0,.6);
     }
-    .service-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
+    .lb-controls{
+      position:absolute; inset:auto 0 20px 0; display:flex; justify-content:center; gap:16px;
     }
-    .service {
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      transition: transform 0.3s;
+    .lb-btn{
+      background: rgba(27,165,165,.15);
+      border:1px solid rgba(255,255,255,.14);
+      color:#EAEAEA; border-radius:999px; padding:10px 14px; cursor:pointer;
+      backdrop-filter: blur(6px);
+      transition:.2s;
     }
-    .service:hover {
-      transform: translateY(-5px);
+    .lb-btn:hover{background: rgba(27,165,165,.28)}
+    .lb-close{position:absolute; top:16px; right:16px}
+
+    /* =========================================================
+       TESTIMONIALS (carousel)
+       ========================================================= */
+    .carousel{
+      position:relative; overflow:hidden; border-radius: var(--radius);
+      border:1px solid rgba(255,255,255,.06);
+      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.02));
+      box-shadow: var(--shadow);
+    }
+    .slides{display:flex; transition: transform .5s ease}
+    .slide{
+      min-width:100%; padding: clamp(20px, 6vw, 40px);
+      display:grid; grid-template-columns: auto 1fr; gap:16px; align-items:center;
+    }
+    .avatar{
+      width:64px; height:64px; border-radius:50%; overflow:hidden; border:1px solid rgba(255,255,255,.12)
+    }
+    .quote{font-size: clamp(16px, 1.8vw, 20px)}
+    .name{margin-top:8px; font-weight:600}
+    .stars{color:#f5c542; letter-spacing:1px; margin-top:4px}
+    .carousel-controls{
+      position:absolute; inset:auto 14px 14px auto; display:flex; gap:10px;
+    }
+    .dotbar{
+      position:absolute; left:50%; transform:translateX(-50%);
+      bottom:14px; display:flex; gap:8px;
+    }
+    .dot{
+      width:9px; height:9px; border-radius:50%; background:#666; cursor:pointer; transition:.2s;
+    }
+    .dot.active{background: var(--accent-2)}
+
+    /* =========================================================
+       ABOUT (“Our Story”)
+       ========================================================= */
+    .about-card{
+      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.06);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: clamp(20px, 4vw, 36px);
+      max-width: 900px;
     }
 
-    /* -------------------------------
-       PORTFOLIO
-    ---------------------------------*/
-    .portfolio {
-      padding: 80px 20px;
-      background: #f0f0f0;
-      text-align: center;
+    /* =========================================================
+       CONTACT (no form; clear CTAs)
+       ========================================================= */
+    .contact-cta{
+      display:grid; gap:12px; margin-top:8px;
     }
-    .portfolio h2 {
-      margin-bottom: 40px;
-      font-size: 2rem;
+    .contact-cta a{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:12px 16px; border-radius:12px; font-weight:700;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color:#0c1111; border:1px solid transparent;
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+      transition: transform .2s, box-shadow .2s;
+      width:max-content;
     }
-    .portfolio-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-    }
-    .portfolio-item {
-      position: relative;
-      overflow: hidden;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    .portfolio-item img {
-      width: 100%;
-      display: block;
-      transition: transform 0.3s ease;
-    }
-    .portfolio-item:hover img {
-      transform: scale(1.1);
-    }
-    .portfolio-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.6);
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      opacity: 0;
-      transition: opacity 0.3s;
-      font-size: 1.2rem;
-      font-weight: bold;
-    }
-    .portfolio-item:hover .portfolio-overlay {
-      opacity: 1;
-    }
+    .contact-cta a:hover{transform:translateY(-2px); box-shadow:0 16px 40px rgba(0,0,0,.45)}
+    .contact-note{color:var(--muted); margin-top: 10px}
 
-    /* -------------------------------
-       REVIEWS
-    ---------------------------------*/
-    .reviews {
-      padding: 80px 20px;
-      text-align: center;
-    }
-    .reviews h2 {
-      margin-bottom: 40px;
-      font-size: 2rem;
-    }
-    .review-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-    }
-    .review {
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      font-style: italic;
-    }
-
-    /* -------------------------------
-       ABOUT
-    ---------------------------------*/
-    .about {
-      padding: 80px 20px;
-      text-align: center;
-      background: #fff;
-    }
-    .about h2 {
-      margin-bottom: 20px;
-    }
-    .about p {
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    /* -------------------------------
-       CONTACT
-    ---------------------------------*/
-    .contact {
-      padding: 80px 20px;
-      text-align: center;
-      background: #f0f0f0;
-    }
-    .contact h2 {
-      margin-bottom: 20px;
-    }
-    .contact a {
-      display: block;
-      margin: 10px 0;
-      font-size: 1.1rem;
-      color: #00bcd4;
-    }
-    .socials {
-      margin-top: 20px;
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-    }
-    .socials a {
-      background: #00bcd4;
-      color: white;
-      padding: 10px 15px;
-      border-radius: 6px;
-      transition: 0.3s;
-    }
-    .socials a:hover {
-      background: #0097a7;
-    }
-
-    /* -------------------------------
+    /* =========================================================
        FOOTER
-    ---------------------------------*/
-    footer {
-      background: #111;
-      color: white;
-      text-align: center;
-      padding: 20px;
+       ========================================================= */
+    footer{
+      max-width:var(--maxw); margin: 50px auto 80px; padding:0 20px;
+      color:var(--muted); display:flex; justify-content:space-between; align-items:center; gap:10px;
+      flex-wrap:wrap;
     }
   </style>
 </head>
 <body>
-  <!-- HEADER -->
-  <header>
-    <img src="logo.png" alt="Hector's Droning Services Logo">
-    <div class="menu-toggle" id="menu-toggle">
-      <div></div>
-      <div></div>
-      <div></div>
+
+  <!-- ======================= NAV / HEADER ======================= -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="nav-brand">Hector's Droning Services</div>
+
+      <div class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </div>
+
+      <div class="nav-links" id="navLinks">
+        <a href="#services">Services</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#testimonials">Client Testimonials</a>
+        <a href="#about">Our Story</a>
+        <a href="#contact">Contact</a>
+      </div>
     </div>
-    <nav id="nav">
-      <a href="#home">Home</a>
-      <a href="#services">Services</a>
-      <a href="#portfolio">Portfolio</a>
-      <a href="#reviews">Reviews</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
-    </nav>
+  </nav>
+
+  <!-- ======================= HERO ======================= -->
+  <header class="hero" id="home" aria-label="Cinematic hero">
+    <div class="hero-content reveal visible">
+      <div class="eyebrow">Aerial Cinematics</div>
+      <h1>Elevate Your Perspective</h1>
+      <p class="lead">Premium drone cinematography and photography for real estate, construction, and brands that demand a higher standard.</p>
+      <a class="btn" href="#contact">Start Your Project</a>
+    </div>
   </header>
 
-  <!-- HERO -->
-  <section class="hero" id="home">
-    <h1>Elevate Your Perspective</h1>
-    <p>Professional aerial photography & videography to bring your vision to life.</p>
-    <a href="#contact" class="btn">Request a Quote</a>
-  </section>
+  <!-- ======================= SERVICES ======================= -->
+  <section id="services">
+    <div class="container">
+      <h2 class="section-title reveal">Our Expertise</h2>
+      <p class="section-sub reveal">Solutions designed to deliver clarity, impact, and measurable results.</p>
 
-  <!-- SERVICES -->
-  <section class="services" id="services">
-    <h2>Our Services</h2>
-    <div class="service-grid">
-      <div class="service">🏠 Real Estate Photography</div>
-      <div class="service">🎉 Event Coverage</div>
-      <div class="service">🏗️ Construction Progress</div>
-      <div class="service">🌳 Nature & Landscape</div>
-    </div>
-  </section>
+      <div class="services">
+        <!-- Service 1 -->
+        <article class="service reveal">
+          <div class="icon">🏠</div>
+          <h3>Real Estate Cinematics</h3>
+          <p>Showcase properties with sweeping aerials, dynamic reveals, and polished edits that increase clicks and viewings.</p>
+        </article>
 
-  <!-- PORTFOLIO -->
-  <section class="portfolio" id="portfolio">
-    <h2>Portfolio</h2>
-    <div class="portfolio-container">
-      <div class="portfolio-item">
-        <img src="portfolio1.jpg" alt="Nature">
-        <div class="portfolio-overlay">Nature</div>
-      </div>
-      <div class="portfolio-item">
-        <img src="portfolio2.jpg" alt="Real Estate">
-        <div class="portfolio-overlay">Real Estate</div>
-      </div>
-      <div class="portfolio-item">
-        <img src="portfolio3.jpg" alt="Events">
-        <div class="portfolio-overlay">Events</div>
-      </div>
-      <div class="portfolio-item">
-        <img src="portfolio4.jpg" alt="Construction">
-        <div class="portfolio-overlay">Construction</div>
+        <!-- Service 2 -->
+        <article class="service reveal">
+          <div class="icon">🏗️</div>
+          <h3>Construction Monitoring</h3>
+          <p>Consistent flight paths and time-lapse progress capture to keep teams aligned and stakeholders informed.</p>
+        </article>
+
+        <!-- Service 3 -->
+        <article class="service reveal">
+          <div class="icon">🛠️</div>
+          <h3>Infrastructure Inspections</h3>
+          <p>High-resolution imagery and safe stand-off distances for roofs, towers, and hard-to-reach assets.</p>
+        </article>
+
+        <!-- Service 4 -->
+        <article class="service reveal">
+          <div class="icon">🗺️</div>
+          <h3>Aerial Surveying</h3>
+          <p>Orthomosaics and terrain overviews to support planning, measurement, and environmental assessments.</p>
+        </article>
       </div>
     </div>
   </section>
 
-  <!-- REVIEWS -->
-  <section class="reviews" id="reviews">
-    <h2>What Clients Say</h2>
-    <div class="review-grid">
-      <div class="review">“Absolutely stunning drone shots! Brought my event to life.”</div>
-      <div class="review">“Hector captured my property beautifully – helped me sell fast!”</div>
-      <div class="review">“Reliable, creative, and professional. Highly recommend.”</div>
+  <!-- ======================= PORTFOLIO ======================= -->
+  <section id="portfolio">
+    <div class="container">
+      <h2 class="section-title reveal">Portfolio</h2>
+      <p class="section-sub reveal">Selected aerial stills — click any image to view full-screen.</p>
+
+      <div class="portfolio-grid">
+        <!-- Use Unsplash placeholders; replace src with your own later -->
+        <figure class="tile col-8 reveal" data-index="0">
+          <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop" alt="Cliffside coast at golden hour">
+          <div class="overlay"><h4>Coastal Cinematics</h4></div>
+        </figure>
+        <figure class="tile col-4 reveal" data-index="1">
+          <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=1200&auto=format&fit=crop" alt="Modern home from above">
+          <div class="overlay"><h4>Real Estate</h4></div>
+        </figure>
+        <figure class="tile col-6 reveal" data-index="2">
+          <img src="https://images.unsplash.com/photo-1508615070457-7baeba4003a1?q=80&w=1200&auto=format&fit=crop" alt="Construction site aerial">
+          <div class="overlay"><h4>Progress Tracking</h4></div>
+        </figure>
+        <figure class="tile col-6 reveal" data-index="3">
+          <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=1200&auto=format&fit=crop" alt="River cutting through forest">
+          <div class="overlay"><h4>Nature & Terrain</h4></div>
+        </figure>
+        <figure class="tile col-4 reveal" data-index="4">
+          <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=1200&auto=format&fit=crop" alt="Festival night lights aerial">
+          <div class="overlay"><h4>Events</h4></div>
+        </figure>
+        <figure class="tile col-8 reveal" data-index="5">
+          <img src="https://images.unsplash.com/photo-1542039375-28138150cc31?q=80&w=1200&auto=format&fit=crop" alt="Village rooftops from above">
+          <div class="overlay"><h4>Urban Fabric</h4></div>
+        </figure>
+      </div>
     </div>
   </section>
 
-  <!-- ABOUT -->
-  <section class="about" id="about">
-    <h2>About Us</h2>
-    <p>Hector's Droning Services is passionate about capturing the world from above. With experience in events, real estate, and commercial projects, we provide professional aerial photography and videography tailored to your needs.</p>
-  </section>
+  <!-- LIGHTBOX (hidden until a portfolio image is clicked) -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="lb-btn lb-close" id="lbClose" aria-label="Close">✕</button>
+    <img id="lbImage" alt="Expanded portfolio image">
+    <div class="lb-controls">
+      <button class="lb-btn" id="lbPrev" aria-label="Previous">◀</button>
+      <button class="lb-btn" id="lbNext" aria-label="Next">▶</button>
+    </div>
+  </div>
 
-  <!-- CONTACT -->
-  <section class="contact" id="contact">
-    <h2>Contact</h2>
-    <a href="tel:+447774862763">📞 +44 7774862763</a>
-    <a href="mailto:ulphdroning@gmail.com">✉️ ulphdroning@gmail.com</a>
-    <div class="socials">
-      <a href="https://instagram.com/Hectors_Drone_Services" target="_blank">Instagram</a>
-      <a href="https://www.youtube.com/@HectorsDroneServices" target="_blank">YouTube</a>
-      <a href="https://www.tiktok.com/@hectors_drone_services" target="_blank">TikTok</a>
+  <!-- ======================= TESTIMONIALS ======================= -->
+  <section id="testimonials">
+    <div class="container">
+      <h2 class="section-title reveal">Client Success Stories</h2>
+      <p class="section-sub reveal">Trusted by property teams, builders, and brands.</p>
+
+      <div class="carousel reveal" aria-roledescription="carousel">
+        <div class="slides" id="slides">
+          <!-- Slide 1 -->
+          <div class="slide">
+            <img class="avatar" src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?q=80&w=200&auto=format&fit=crop" alt="Client headshot">
+            <div>
+              <div class="quote">“Hector transformed our luxury listing with elegant fly-throughs and sunrise exteriors. The film captured mood and scale in a way photos never could.”</div>
+              <div class="name">— Olivia Hart, Estate Director</div>
+              <div class="stars">★★★★★</div>
+            </div>
+          </div>
+
+          <!-- Slide 2 -->
+          <div class="slide">
+            <img class="avatar" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop" alt="Client headshot">
+            <div>
+              <div class="quote">“The monthly construction updates are consistent, clear, and professional. Stakeholders finally have a single source of truth from the air.”</div>
+              <div class="name">— Marcus Reid, Project Manager</div>
+              <div class="stars">★★★★★</div>
+            </div>
+          </div>
+
+          <!-- Slide 3 -->
+          <div class="slide">
+            <img class="avatar" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&auto=format&fit=crop" alt="Client headshot">
+            <div>
+              <div class="quote">“Hector’s safety planning and attention to detail gave us confidence from day one. The final footage became the hero of our campaign.”</div>
+              <div class="name">— Priya Shah, Brand Lead</div>
+              <div class="stars">★★★★★</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Carousel controls -->
+        <div class="carousel-controls">
+          <button class="lb-btn" id="prevSlide" aria-label="Previous testimonial">◀</button>
+          <button class="lb-btn" id="nextSlide" aria-label="Next testimonial">▶</button>
+        </div>
+        <div class="dotbar" id="dotbar" aria-label="Slide indicators"></div>
+      </div>
     </div>
   </section>
 
-  <!-- FOOTER -->
+  <!-- ======================= ABOUT ======================= -->
+  <section id="about">
+    <div class="container">
+      <h2 class="section-title reveal">Our Story</h2>
+      <div class="about-card reveal">
+        <p>Hector’s Droning Services was founded on a simple idea: precision from the ground up, poetry from the air. We combine licensed pilots, rigorous pre-flight planning, and a filmmaker’s eye to deliver work that looks effortless and feels inevitable.</p>
+        <p>From crafted real-estate films to technical inspections and surveys, our process is built for quality, safety, and clarity. Every flight is insured, logged, and executed with a checklist mindset—so you can focus on the bigger picture while we capture it.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= CONTACT ======================= -->
+  <section id="contact">
+    <div class="container">
+      <h2 class="section-title reveal">Ready to Start?</h2>
+      <p class="section-sub reveal">Tell us about your location, timing, and goals—we’ll propose a simple flight plan and a clear quote.</p>
+
+      <div class="contact-cta reveal">
+        <!-- “sms:” attempts to open the default messaging app on mobile -->
+        <a href="sms:+447774862763" aria-label="Message Hector's Droning Services">📱 Message: +44 7774862763</a>
+        <a href="mailto:hectorsdroning@gmail.com" aria-label="Email Hector's Droning Services">✉️ Email: hectorsdroning@gmail.com</a>
+      </div>
+      <p class="contact-note reveal">Prefer a call? Save the number and dial when convenient.</p>
+    </div>
+  </section>
+
+  <!-- ======================= FOOTER ======================= -->
   <footer>
-    <p>&copy; 2025 Hector's Droning Services. All rights reserved.</p>
+    <small>© <span id="year"></span> Hector's Droning Services</small>
+    <small>Premium aerials • Safety-led operations • Cinematic delivery</small>
   </footer>
 
-  <!-- JAVASCRIPT -->
+  <!-- ======================= SCRIPTS ======================= -->
   <script>
-    const menuToggle = document.getElementById('menu-toggle');
-    const nav = document.getElementById('nav');
+    /* -------------------------------------------
+       Utility: current year in footer
+    --------------------------------------------*/
+    document.getElementById('year').textContent = new Date().getFullYear();
 
+    /* -------------------------------------------
+       Mobile menu toggle
+    --------------------------------------------*/
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks   = document.getElementById('navLinks');
     menuToggle.addEventListener('click', () => {
-      nav.classList.toggle('active');
+      const open = navLinks.classList.toggle('show');
+      menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
+    // Close menu after clicking a link (mobile)
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      navLinks.classList.remove('show');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    }));
+
+    /* -------------------------------------------
+       Reveal-on-scroll via IntersectionObserver
+    --------------------------------------------*/
+    const revealEls = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting){
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: .16 });
+    revealEls.forEach(el => io.observe(el));
+
+    /* -------------------------------------------
+       Portfolio Lightbox
+    --------------------------------------------*/
+    const lightbox   = document.getElementById('lightbox');
+    const lbImage    = document.getElementById('lbImage');
+    const lbClose    = document.getElementById('lbClose');
+    const lbPrevBtn  = document.getElementById('lbPrev');
+    const lbNextBtn  = document.getElementById('lbNext');
+
+    // Image sources (order matters; match data-index in tiles)
+    const images = [
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=2400&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=2400&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1508615070457-7baeba4003a1?q=80&w=2400&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=2400&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=2400&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1542039375-28138150cc31?q=80&w=2400&auto=format&fit=crop"
+    ];
+    let currentIndex = 0;
+
+    function openLightbox(index){
+      currentIndex = index;
+      lbImage.src = images[currentIndex];
+      lightbox.classList.add('show');
+      lightbox.setAttribute('aria-hidden','false');
+    }
+    function closeLightbox(){
+      lightbox.classList.remove('show');
+      lightbox.setAttribute('aria-hidden','true');
+      lbImage.src = '';
+    }
+    function nextImage(){ currentIndex = (currentIndex + 1) % images.length; lbImage.src = images[currentIndex]; }
+    function prevImage(){ currentIndex = (currentIndex - 1 + images.length) % images.length; lbImage.src = images[currentIndex]; }
+
+    document.querySelectorAll('.tile').forEach(tile => {
+      tile.addEventListener('click', () => openLightbox(parseInt(tile.dataset.index, 10)));
+    });
+    lbClose.addEventListener('click', closeLightbox);
+    lbNextBtn.addEventListener('click', nextImage);
+    lbPrevBtn.addEventListener('click', prevImage);
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('show')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') nextImage();
+      if (e.key === 'ArrowLeft')  prevImage();
+    });
+    // Close when clicking backdrop (but not the image)
+    lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+
+    /* -------------------------------------------
+       Testimonials Carousel (simple slider)
+    --------------------------------------------*/
+    const slidesWrap = document.getElementById('slides');
+    const slides = Array.from(slidesWrap.children);
+    let slideIndex = 0;
+
+    const prevSlideBtn = document.getElementById('prevSlide');
+    const nextSlideBtn = document.getElementById('nextSlide');
+    const dotbar = document.getElementById('dotbar');
+
+    // Create dots
+    slides.forEach((_, i) => {
+      const dot = document.createElement('div');
+      dot.className = 'dot' + (i===0 ? ' active' : '');
+      dotbar.appendChild(dot);
+      dot.addEventListener('click', () => goToSlide(i));
+    });
+    const dots = Array.from(dotbar.children);
+
+    function updateCarousel(){
+      slidesWrap.style.transform = `translateX(-${slideIndex * 100}%)`;
+      dots.forEach((d,i) => d.classList.toggle('active', i===slideIndex));
+    }
+    function goToSlide(i){
+      slideIndex = i;
+      updateCarousel();
+      resetAuto();
+    }
+    function nextSlide(){ slideIndex = (slideIndex + 1) % slides.length; updateCarousel(); }
+    function prevSlide(){ slideIndex = (slideIndex - 1 + slides.length) % slides.length; updateCarousel(); }
+
+    nextSlideBtn.addEventListener('click', () => { nextSlide(); resetAuto(); });
+    prevSlideBtn.addEventListener('click', () => { prevSlide(); resetAuto(); });
+
+    let auto = setInterval(nextSlide, 6000);
+    function resetAuto(){ clearInterval(auto); auto = setInterval(nextSlide, 6000); }
   </script>
 </body>
 </html>
