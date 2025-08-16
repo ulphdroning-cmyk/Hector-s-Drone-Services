@@ -3,20 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hector's Drone Services</title>
+  <title>Hector’s Drone Services</title>
   <style>
-    /* General Reset */
+    /* Reset & base */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: Arial, sans-serif;
+      line-height: 1.6;
       background: #f9f9f9;
       color: #333;
-      line-height: 1.6;
-      scroll-behavior: smooth;
     }
-    h1, h2, h3 { margin-bottom: 15px; }
-    section { padding: 80px 20px; text-align: center; }
-    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
 
     /* Navbar */
     nav {
@@ -48,21 +46,39 @@
       height: 100vh;
       background: url('hero-drone.jpg') center/cover no-repeat;
       display: flex;
-      flex-direction: column;
-      align-items: center;
       justify-content: center;
-      color: white;
+      align-items: center;
+      flex-direction: column;
+      color: #fff;
+      text-align: center;
       text-shadow: 0 2px 5px rgba(0,0,0,0.6);
       padding: 0 20px;
     }
-    #hero h1 { font-size: 3.5em; }
-    #hero p { font-size: 1.3em; margin-top: 10px; }
+    #hero h1 { font-size: 3.5em; margin-bottom: 15px; }
+    #hero p { font-size: 1.4em; }
+
+    /* Section base */
+    section {
+      padding: 80px 20px;
+      text-align: center;
+      max-width: 1100px;
+      margin: auto;
+    }
+    section h2 {
+      font-size: 2.2em;
+      margin-bottom: 20px;
+    }
 
     /* About */
     #about img {
       width: 200px;
       border-radius: 50%;
       margin-bottom: 20px;
+    }
+    #about p {
+      font-size: 1.1em;
+      max-width: 700px;
+      margin: auto;
     }
 
     /* Services */
@@ -75,19 +91,24 @@
     }
     .service {
       background: #fff;
-      padding: 20px;
-      width: 220px;
+      padding: 25px;
       border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      transition: transform 0.3s;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+      width: 220px;
+      transition: transform 0.3s, box-shadow 0.3s;
     }
-    .service:hover { transform: translateY(-5px); }
+    .service:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    }
+    .service h3 { margin-bottom: 10px; }
 
     /* Portfolio */
     #portfolio .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 20px;
+      margin-top: 30px;
     }
     #portfolio img {
       width: 100%;
@@ -100,20 +121,21 @@
     }
 
     /* Contact */
-    form {
+    #contact form {
       max-width: 500px;
       margin: auto;
       display: flex;
       flex-direction: column;
       gap: 15px;
+      margin-top: 20px;
     }
-    form input, form select, form textarea {
+    #contact input, #contact select, #contact textarea {
       padding: 12px;
       border: 1px solid #ccc;
       border-radius: 5px;
       font-size: 1em;
     }
-    form button {
+    #contact button {
       padding: 12px;
       background: #0077cc;
       color: #fff;
@@ -123,26 +145,23 @@
       cursor: pointer;
       transition: background 0.3s;
     }
-    form button:hover { background: #005fa3; }
-    #formMessage {
-      margin-top: 10px;
-      font-weight: bold;
-      display: none;
-    }
-    #formMessage.success { color: green; }
-    #formMessage.error { color: red; }
+    #contact button:hover { background: #005fa3; }
 
     /* Footer */
     footer {
       background: #222;
       color: #fff;
       text-align: center;
-      padding: 20px;
+      padding: 25px 20px;
+      margin-top: 50px;
     }
     footer a {
       color: #fff;
       margin: 0 10px;
     }
+
+    /* Spacing for fixed nav */
+    .spacer { height: 70px; }
   </style>
 </head>
 <body>
@@ -158,6 +177,7 @@
       <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
+  <div class="spacer"></div>
 
   <!-- Hero -->
   <section id="hero">
@@ -169,18 +189,21 @@
   <section id="about">
     <h2>About Me</h2>
     <img src="your-photo.jpg" alt="Hector with drone">
-    <p>Hi, I’m Hector. I started flying drones because I love seeing the world from a new perspective. I’m qualified, licensed, and passionate about capturing stunning aerial footage for homes, events, and more.</p>
+    <p>
+      Hi, I’m Hector. I started flying drones because I love seeing the world from a new perspective. 
+      I’m qualified, licensed, and passionate about capturing stunning aerial footage for homes, events, and more.
+    </p>
   </section>
 
   <!-- Services -->
   <section id="services">
     <h2>Services</h2>
     <div class="service-list">
-      <div class="service"><h3>House Footage</h3></div>
-      <div class="service"><h3>Events</h3></div>
-      <div class="service"><h3>Festivals</h3></div>
-      <div class="service"><h3>Construction Progress</h3></div>
-      <div class="service"><h3>Tourism / Farming</h3></div>
+      <div class="service"><h3>House Footage</h3><p>Aerial views of properties for sales, marketing, or memories.</p></div>
+      <div class="service"><h3>Events</h3><p>Weddings, parties, and gatherings captured beautifully from the sky.</p></div>
+      <div class="service"><h3>Festivals</h3><p>Dynamic crowd and stage shots that bring festivals to life.</p></div>
+      <div class="service"><h3>Construction Progress</h3><p>Track builds over time with professional aerial updates.</p></div>
+      <div class="service"><h3>Tourism / Farming</h3><p>Scenic landscapes, agricultural surveys, and more.</p></div>
     </div>
   </section>
 
@@ -198,7 +221,7 @@
   <!-- Contact -->
   <section id="contact">
     <h2>Contact Me</h2>
-    <form id="quoteForm" action="https://formspree.io/f/mrbldnvo" method="POST">
+    <form id="quoteForm">
       <input type="text" name="name" placeholder="Your Name" required>
       <input type="email" name="email" placeholder="Your Email" required>
       <select name="service" required>
@@ -213,7 +236,6 @@
       <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
       <button type="submit">Request a Quote</button>
     </form>
-    <div id="formMessage"></div>
     <p>Email: <a href="mailto:ulphdroning@gmail.com">ulphdroning@gmail.com</a></p>
     <p>Phone: <a href="tel:+447774862763">+44 7774862763</a></p>
     <p>
@@ -228,38 +250,22 @@
     <p>© 2025 Hector’s Drone Services. All rights reserved.</p>
   </footer>
 
-  <!-- Form JavaScript -->
+  <!-- Mailto JS -->
   <script>
+    // Simple mailto fallback for the form (no backend required)
     const form = document.getElementById('quoteForm');
-    const formMessage = document.getElementById('formMessage');
-
-    form.addEventListener('submit', async function(e) {
-      e.preventDefault();
-      formMessage.style.display = 'none';
-
-      try {
-        const response = await fetch(form.action, {
-          method: form.method,
-          body: new FormData(form),
-          headers: { 'Accept': 'application/json' }
-        });
-
-        if (response.ok) {
-          formMessage.textContent = "✅ Thanks! Your message has been sent.";
-          formMessage.className = "success";
-          formMessage.style.display = "block";
-          form.reset();
-        } else {
-          formMessage.textContent = "❌ Oops! Something went wrong. Try again later.";
-          formMessage.className = "error";
-          formMessage.style.display = "block";
-        }
-      } catch (error) {
-        formMessage.textContent = "❌ Network error. Please check your connection.";
-        formMessage.className = "error";
-        formMessage.style.display = "block";
-      }
+    form.addEventListener('submit', function(ev){
+      ev.preventDefault();
+      const data = new FormData(form);
+      const name = encodeURIComponent(data.get('name'));
+      const email = encodeURIComponent(data.get('email'));
+      const service = encodeURIComponent(data.get('service'));
+      const message = encodeURIComponent(data.get('message'));
+      const subject = `Quote request: ${decodeURIComponent(service) || 'Drone project'}`;
+      const body = `Name: ${decodeURIComponent(name)}%0D%0AEmail: ${decodeURIComponent(email)}%0D%0AService: ${decodeURIComponent(service)}%0D%0A%0D%0ADetails:%0D%0A${decodeURIComponent(message)}`;
+      window.location.href = `mailto:ulphdroning@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
     });
   </script>
+
 </body>
 </html>
