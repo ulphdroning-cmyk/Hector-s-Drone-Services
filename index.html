@@ -633,8 +633,7 @@
       updateCarousel();
       resetAuto();
     }
-    function nextSlide(){ slideIndex = (slideIndex + 1) % slides.length; updateCarousel(); }
-    function prevSlide(){ slideIndex = (slideIndex - 1 + slides.length) % slides.length; updateCarousel(); }
+    
 
     nextSlideBtn.addEventListener('click', () => { nextSlide(); resetAuto(); });
     prevSlideBtn.addEventListener('click', () => { prevSlide(); resetAuto(); });
