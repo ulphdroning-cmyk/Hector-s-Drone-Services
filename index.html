@@ -624,22 +624,6 @@
     });
     const dots = Array.from(dotbar.children);
 
-    function updateCarousel(){
-      slidesWrap.style.transform = `translateX(-${slideIndex * 100}%)`;
-      dots.forEach((d,i) => d.classList.toggle('active', i===slideIndex));
-    }
-    function goToSlide(i){
-      slideIndex = i;
-      updateCarousel();
-      resetAuto();
-    }
     
-
-    nextSlideBtn.addEventListener('click', () => { nextSlide(); resetAuto(); });
-    prevSlideBtn.addEventListener('click', () => { prevSlide(); resetAuto(); });
-
-    let auto = setInterval(nextSlide, 6000);
-    function resetAuto(){ clearInterval(auto); auto = setInterval(nextSlide, 6000); }
-  </script>
 </body>
 </html>
